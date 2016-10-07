@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<link href="../public/styles/cominfo.css" rel="stylesheet"/>
+<script type="text/JavaScript" src="../public/jquery/jquery-1.9.1.js"></script>
+
+<title>{$title}</title>
+</head>
+<body id="main">
+	<div id="map">
+
+		
+	后台首页>>email_list>><strong id="title">{$title}</strong>
+
+	</div><!-- / -->
+<ol>
+	<li><a href="email_list.php?action=show" title="">email list information</a></li>
+	<li><a href="email_list.php?action=add" title="">add email</a></li>
+	<li><a href="email_list.php?action=send" title="">send email</a></li>
+	<li><a href="email_list.php?action=deleteOne" title="">delete one by email</a></li>
+	<li><a href="email_list.php?action=deleteEmailById" title="">delete email by choosed ID</a></li>
+</ol><!-- / -->
+
+
+
+{if $show}
+<table>
+	<caption>{$title}</caption>
+	<thead>
+		<tr>	
+			<th>序号</th>
+			<th>first name</th>
+			<th>last name</th>
+			<th>email</th>
+			<th>do something</th>
+		</tr>
+	</thead>
+	<tbody>
+	{if $AllEmailList}
+	{foreach $AllEmailList as $key=>$value}
+		<tr>
+			<td><script>document.write({$key+1}+{$num});</script></td>
+			<td>{$value->first_name}</td>
+			<td>{$value->last_name}</td>
+			<td>{$value->email}</td>
+			<td>
+	   		 <a href="email_list.php?action=update&id={$value->id}">修改</a>|
+	   		 <a href="email_list.php?action=delete&id={$value->id}" onclick="return confirm('确定要删除吗？')">删除</a>
+			</td>
+		</tr>
+	{/foreach}
+	{else}
+		<tr><td colspan="5">no data</td></tr>
+	{/if}
+	</tbody>
+</table>
+
+<div id="page">{$page}</div>
+{/if}
+
+{if $deleteEmailById}
+<form method="post" name="content" enctype="multipart/form-data" action="">
+<table>
+	<caption>{$title}</caption>
+	<thead>
+		<tr>	
+			<th>序号</th>
+			<th>选择删除id</th>
+			<th>first name</th>
+			<th>last name</th>
+			<th>email</th>
+			<th>do something</th>
+		</tr>
+	</thead>
+	<tbody>
+	{if $AllEmailList}
+	{foreach $AllEmailList as $key=>$value}
+		<tr>
+			<td><script>document.write({$key+1}+{$num});</script></td>					//行序列号
+			<td><input type="checkbox" value="{$value->id}" name="toDelete[]"></td>    //行复选框
+			<td>{$value->first_name}</td>
+			<td>{$value->last_name}</td>
+			<td>{$value->email}</td>
+			<td>
+	   		 <a href="email_list.php?action=update&id={$value->id}">修改</a>|
+	   		 <a href="email_list.php?action=delete&id={$value->id}" onclick="return confirm('确定要删除吗？')">删除</a>
+			</td>
+			
+		</tr>
+	{/foreach}
+		
+	{else}
+		<tr><td colspan="5">no data</td></tr>
+	{/if}
+		<tr>
+				<td colspan="6"><input type="submit" value="delete all choose" name="submit" /></td>
+		</tr>
+	</tbody>
+</table>
+</form>
+<div id="page">{$page}</div>
+{/if}
+
+
+{if $add}
+<form method="post" name="content" enctype="multipart/form-data" >
+	<table>
+	
+	<caption>{$title}</caption>
+		<thead>
+			<tr>
+				<th colspan="2">email information</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			<tr>
+				<td><label for="firstname">First Name:</label></td><td><input type="text" id="firstname" name="firstname" /></td>
+			</tr>
+			<tr>
+				<td><label for="lastname">Last Name:</label></td><td><input type="text" id="lastname" name="lastname" /></td>
+			</tr>
+			<tr>
+				<td><label for="email">What is your email?:</label></td><td><input type="text" id="email" name="email" /></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2"><input type="submit" value="submit" name="submit" /></td>
+			</tr>
+			
+			
+		</tbody>
+		
+</table>
+</form>	
+{/if}
+
+
+{if $update}
+<form action="" method="post" accept-charset="utf-8" >
+<table>
+			<input type="hidden" name="id" value={$G_id}>
+	<caption>{$title}</caption>
+		<thead>
+			<tr>
+				<th colspan="2">update email information </th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			<tr>
+				<td><label for="firstname">First Name:</label></td><td><input type="text" id="firstname" name="firstname" value="{$G_firstName}" /></td>
+			</tr>
+			<tr>
+				<td><label for="lastname">Last Name:</label></td><td><input type="text" id="lastname" name="lastname" value="{$G_lastName}" /></td>
+			</tr>
+			<tr>
+				<td><label for="email">email:</label></td><td><input type="text" id="email" name="email" value="{$G_email}"/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="submit" name="submit" /></td>
+			</tr>
+			
+			
+		</tbody>
+		
+</table>
+	
+</form>
+{/if}
+
+{if $send}
+<form method="post" name="content" enctype="multipart/form-data" action="" >
+	<table>
+	
+	<caption></caption>
+		<thead>
+			<tr>
+				<th colspan="">{$title}</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			<tr><td><label for="subject">Subject of email:</label></td></tr>
+			<tr><td><input type="text" id="subject" name="subject"  value="{$G_subject}" size="60"/></td></tr>
+			<tr><td><label for="elvisMail">Body of email::</label></td></tr>
+			<tr><td><textarea id="elvisMail" name="elvisMail" rows="8" cols="60">{$G_elvisMail}</textarea></td></tr>
+			<tr><td colspan="2"><input type="submit" value="submit" name="submit" /></td></tr>
+	
+			
+		</tbody>
+		
+</table>
+</form>	
+{/if}
+
+{if $deleteOne}
+<form method="post" name="content" enctype="multipart/form-data" action="" >
+	<table>
+	
+	<caption></caption>
+		<thead>
+			<tr>
+				<th colspan="">{$title}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr><td>Enter an email address to remove</td></tr>
+			<tr><td><label for="deleteOne">Email address:</label></td></tr>
+			<tr><td><input type="text" id="email" name="email" size="60"/></td></tr>
+			<tr><td colspan=""><input type="submit" value="remove" name="submit" /></td></tr>
+	
+			
+		</tbody>
+		
+</table>
+</form>	
+
+{/if}
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<title>Guitar Wars - high Score</title>
+<link href="../public/styles/cominfo.css" rel="stylesheet"/>
+<script type="text/JavaScript" src="../public/jquery/jquery-1.9.1.js"></script>
+
+
+</head>
+<body id="main">
+	<div id="map">
+	<ol>
+{if $session}
+		<li>welcome {$userName}:</li><li>><a href="login.php?action=loginOut">loginout</a></li>
+{else}
+		<li><a href="login.php?action=login">login in </a></li><li><a href="login.php?action=add">register</a></li>
+{/if}
+	</ol>
+	</div><!-- / -->
+	<div id="map">
+	<h2>后台首页>>guitar wars>><strong id="title">{$title}</strong></h2>
+	<p>Welcome , Guitar Warrior, do you have waht it takes to crack the high score list?
+		if so, just <a href="?action=add">add your own score</a></p>
+	
+
+	</div><!-- / -->
+	<ol>
+		<li><a href="?action=show" title="">guitarWars scores</a></li>
+		<li><a href="?action=add" title="">add  scores</a></li>
+			
+	
+	</ol>
+	
+ {if $show}
+
+<table>
+	<caption></caption>
+	<thead>
+		<tr>
+			<th>No.</th>
+			<th>name</th>
+			<th>date</th>
+			<th>score</th>
+			<th>screenshot</th>
+			<th>do</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+{if $GuitarWarsScores}
+	{foreach $GuitarWarsScores as $key=>$value}
+		<tr>
+			<td><script>document.write({$key+1}+{$num});</script></td>
+			<td>{$value->name}</td>
+			<td>{$value->date}</td>
+			<td>{$value->score}</td>
+			<td><img src="../../database/uploads/{$value->screenshot}" alt="Score image" width="200" height="40"/></td>
+			<td>
+	   		 <a href="?action=update&id={$value->id}">修改</a>|
+	   		 <a href="?action=delete&id={$value->id}" onclick="return confirm('确定要删除吗？')">删除</a>
+			</td>
+		</tr>
+	{/foreach}
+{/if}
+	</tbody>
+</table>
+<div id="page">{$page}</div>
+{/if} 
+
+{if $add}
+<form  method="post" name="content" enctype="multipart/form-data" action="">
+	<input type='hidden' name="MAX_FILE_SIZE" vlaue='327680' /> 
+<table>
+	<caption>{$title}</caption>
+	<thead>
+		<tr>
+			<th>subjects</th>
+			<th>blank</th>
+				
+		</tr>
+	</thead>
+	
+		<tr><td><label for="firstname">Your Name:</label></td><td><input type="text" id="name" name="name" /></td></tr>
+		<tr><td><label for="score">Your Score:</label></td><td><input type="text" id="score" name="score" /></td></tr>
+		<tr><td><label for="uploadFile">Choose Your ScreenShot:</label></td><td><input type="file" id="screenShot" name="screenShot" /></td></tr>
+		
+		
+		
+		<tr><td colspan="2"><input type="submit" value="submit" name="submit" /></td></tr>
+</table>
+</form>
+{/if}
+
+{if $update}
+<form  method="post" name="content" enctype="multipart/form-data" accept-charset="utf-8" action="">
+	
+	<input type='hidden'  name="id"  value={$G_id} /> 
+	<input type='hidden'  name="G_screenShot"  value="{$G_screenshot_hidden}" /> 
+	
+<table>
+	<caption>{$title}</caption>
+	<thead>
+		<tr>
+			<th>subjects</th>
+			<th>blank</th>
+				
+		</tr>
+	</thead>
+	
+		<tr><td><label for="name">Your Name:</label></td><td><input type="text" id="name" name="name" value="{$G_name}"/></td></tr>
+		<tr><td><label for="score">Your Score:</label></td><td><input type="text" id="score" name="score" value="{$G_score}" /></td></tr>
+		<tr><td><img src="{$G_screenshot}" alt="Score image" width="200" height="40"/></td></tr>
+		<tr><td><label for="uploadFile">Choose Your ScreenShot:</label></td><td><input type="file" id="updateScreenShot" name="updateScreenShot" /></td></tr>
+		
+		
+		
+		<tr><td colspan="2"><input type="submit" value="submit" name="submit" /></td></tr>
+</table>
+</form>
+{/if}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

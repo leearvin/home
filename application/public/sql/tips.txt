@@ -1,0 +1,131 @@
+sql:structured query language:结构化查询语言,
+不同的数据库有差异；
+大小写不敏感;
+DML(数据操作语言)和DDL(数据定义语言):
+DML:select;update;delete;insert into
+DDL:create;alter;
+select查询：
+1.select * from tableName;*通配符；
+2.select columnName from tableName;
+3.select tableName.columnName from tableName;
+4.select distinct columnName from tableName，显示唯一字段；
+update修改
+update tableName set columnName=new value where 条件；
+delete删除
+delete from tableName where 条件
+insert into插入数据
+insert into tableName(字段...)values(字段值...)
+where条件
+where 1为true,0为false；
+where 字段名 运算符  值
+where id <> 10 不等于
+
+普通的查询两个表；
+select * from 表1,表2 where 表1.字段=表2.字段
+符合的结果的才出现
+左联合查询：以左表为主；
+select * from user
+left join trophy
+on user.id=trophy.tid;
+右联合查询：以右表为主；
+select * from user
+right join trophy
+on user.id=trophy.tid;
+子查询(subquery):将一个select语句的查询结果返回给另外一个语句。
+只查询分为：1.标量子查询；2，列子查询，3.行子查询 4，表子查询
+1.标量子查询：select * from user where id=(select trophy.tid from trophy where id=3)
+2.列子查询返回的结果是一列；
+select * from user where id in(select trophy.tid from trophy where id>1)
+3.行子查询：子查询返回的是一行数据，内容要与主查询完全一样
+select * from user where (username,uid)=any(select username,uid from trophy where id=2)
+4.表子查询
+select * from user where (username,uid) in(select username,uid from 
+trophy)
+
+创建新数据库，并设置默认字符集；
+create database only default character set utf8 collate utf8_general_ci;
+如果不存在数据库，就创建。
+create database if not exists only default character set utf8 collate utf8_general_ci;
+删除drop database only;
+
+创建新表，表至少要有一个字段。
+create table demo(
+id int
+)
+如果表不存在，就创建表
+create table if not exists only.demo(id int)
+删除表
+drop table only.demo
+修改表
+alter table demo
+修改表，添加字段
+alter table only.demo
+add username varchar(30) not null
+修改表，在某个字段后添加字段
+ALTER TABLE `demo` ADD `uid` INT( 30 ) NOT NULL AFTER `id` 
+修改表，删除某个字段
+alter table only.demo
+drop uid;
+改变一个字段的类型
+alter table demo
+change uid 
+uid int;
+表重命名
+rename table only.demo to only.test
+约束
+1.not null,不为空约束,强制不接受null值。
+create table if not exists demo(
+id int not null,
+username varchar(30) not null,
+email    varchar(30) not null
+)
+2.unique约束,唯一性约束
+create table if not exists msg(
+id int not null,
+username varchar(30),
+unique(username)
+)
+为多个字段设置唯一性
+create table msg(
+id int not null,
+username varchar(30) not null,
+email    varchar(30) not null,
+uid     int,
+constraint ue unique(username,email)
+)
+删除多个字段的唯一性
+alter table msg
+drop index ue;
+为一个表中的单个字段添加唯一性
+alter table test
+add unique(username);
+为一个表中的多个字段添加唯一性
+alter table msg
+add constraint ue unique(username,email);
+删除表中单个字段的唯一性
+alter table test
+drop index username;
+3.主键,任何一个表都必须有一个主键，并且只能有一个主键,主键默认是unique
+设置主键
+create table msg(
+id int not null auto_increment,
+username varchar(30),
+primary key(id)
+)
+撤销表的主键，首先要去掉主键的auto_increment属性。
+alter table msg
+drop primary key
+为存在的表添加主键
+alter table msg
+add primary key(id);
+
+default默认值
+create table if not exists msg(
+id int not null auto_increment,
+username varchar(30) not null,
+email    varchar(30) not null,
+icon     varchar(30) not null default'default.jpg',
+primary key(id)
+)
+mysql的函数
+

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$title}</title>
+<link href="../public/styles/contacts.css" rel="stylesheet"/>
+<script type="text/JavaScript" src="../public/jquery/jquery-1.9.1.js"></script>
+</head>
+<body id="main">
+	<div id="map" class="">
+		后台首页>>客户管理>><strong id="title">{$title}</strong>
+	</div><!-- / -->
+
+	<ol id="" class="">
+		<li><a href="contacts.php?action=show" title="">客户列表</a></li>
+		<li><a href="contacts.php?action=add" title="">新增客户</a></li>
+	</ol><!-- / -->
+	{if $show}
+	<table>
+		<caption>{$title}</caption>
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>姓名</th>
+				<th>性别</th>
+				<th>公司名称</th>
+				<th>移动电话</th>
+				<th>固定电话</th>
+				<th>公司地址</th>
+				<th>电子信箱</th>
+				<th>聊天软件</th>
+				<th>联系账号</th>
+				<th>照片地址</th>
+				<th>客户等级</th>
+				<th>客户描述</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+	{if $AllContacts}
+	{foreach $AllContacts as $key => $value}
+			<tr>
+				<td>{$value->name}</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+				<td>data</td>
+			</tr>
+	{/foreach}
+	{else}
+			<tr><td colspan="13" rowspan="" headers="">暂无数据</td></tr>
+	{/if}
+
+
+		</tbody>
+	</table>
+
+
+
+
+		
+	{/if}
+
+
+
+</body>
+</html>
